@@ -1,32 +1,6 @@
 import { useState } from "react";
-import "./App.css";
 import Form from "@rjsf/core";
-
-const schema = {
-  title: "Todo",
-  type: "object",
-  required: ["title"],
-  properties: {
-    title: {
-      type: "string",
-      title: "Title",
-      default: "A new task",
-      minLength: 10,
-    },
-    done: {
-      type: "boolean",
-      title: "Done?",
-      default: false,
-    },
-  },
-};
-
-const uiSchema = {
-  title: {
-    classNames: "custom-css-class",
-    "ui:widget": "MyCustomWidget",
-  },
-};
+import { useFetchForms } from "features/forms";
 
 const MyCustomWidget = (props) => {
   return (
@@ -44,22 +18,36 @@ const widgets = {
   MyCustomWidget: MyCustomWidget,
 };
 
-const log = (type) => console.log.bind(console, type);
 function App() {
-  const [formData, setFormData] = useState({
-    title: "First task",
-    done: true,
+  const { data, loading, error } = useFetchForms({
+    name: "registration_form",
   });
+
+  // TODO: Load form data alongside.
+  const [formData, setFormData] = useState({
+    firstName: "john",
+  });
+  const handleSubmit = (formData) => console.log("submit:", formData);
+  const handleError = (error) => console.log("error:", error);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error.message}</div>;
+  const form = data?.data?.[0];
+  if (!form) return null;
+
   return (
-    <Form
-      schema={schema}
-      uiSchema={uiSchema}
-      formData={formData}
-      widgets={widgets}
-      onChange={(e) => setFormData(e.formData)}
-      onSubmit={log("submitted")}
-      onError={log("errors")}
-    />
+    <>
+      <Form
+        schema={form.jsonSchema}
+        uiSchema={form.uiSchema}
+        formData={formData}
+        widgets={widgets}
+        onChange={(e) => setFormData(e.formData)}
+        onSubmit={handleSubmit}
+        onError={handleError}
+        noHtml5Validate
+      />
+    </>
   );
 }
 
