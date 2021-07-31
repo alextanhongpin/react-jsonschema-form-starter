@@ -1,24 +1,65 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import Form from "@rjsf/core";
 
-function App() {
+const schema = {
+  title: "Todo",
+  type: "object",
+  required: ["title"],
+  properties: {
+    title: {
+      type: "string",
+      title: "Title",
+      default: "A new task",
+      minLength: 10,
+    },
+    done: {
+      type: "boolean",
+      title: "Done?",
+      default: false,
+    },
+  },
+};
+
+const uiSchema = {
+  title: {
+    classNames: "custom-css-class",
+    "ui:widget": "MyCustomWidget",
+  },
+};
+
+const MyCustomWidget = (props) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Hello</h1>
+      <input
+        value={props.value}
+        required={props.required}
+        onChange={(e) => props.onChange(e.target.value)}
+      />
     </div>
+  );
+};
+const widgets = {
+  MyCustomWidget: MyCustomWidget,
+};
+
+const log = (type) => console.log.bind(console, type);
+function App() {
+  const [formData, setFormData] = useState({
+    title: "First task",
+    done: true,
+  });
+  return (
+    <Form
+      schema={schema}
+      uiSchema={uiSchema}
+      formData={formData}
+      widgets={widgets}
+      onChange={(e) => setFormData(e.formData)}
+      onSubmit={log("submitted")}
+      onError={log("errors")}
+    />
   );
 }
 
