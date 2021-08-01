@@ -2,20 +2,24 @@ import { ObjectId } from 'mongodb'
 import FormError from './error.js'
 
 export default class FormRepository {
-  constructor (db) {
-    if (!db) throw new FormError('missing dependency: db')
-    this.db = db
+  constructor (collection) {
+    if (!collection) throw new FormError('missing dependency: collection')
+    this.collection = collection
   }
 
   create (form) {
-    return this.db.insertOne(form)
+    return this.collection.forms.insertOne(form)
   }
 
   findAll (query) {
-    return this.db.find(query).toArray()
+    return this.collection.forms.find(query).toArray()
   }
 
   findOne (id) {
-    return this.db.findOne({ _id: ObjectId(id) })
+    return this.collection.forms.findOne({ _id: ObjectId(id) })
+  }
+
+  findAllUsers () {
+    return this.collection.users.find().toArray()
   }
 }

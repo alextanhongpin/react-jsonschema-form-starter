@@ -17,8 +17,7 @@ export default class FormController {
     }
 
     async function getForms (req, res) {
-      const name = req.query.name
-      const forms = await usecase.findAll({ name })
+      const forms = await usecase.findAll(req.query)
       return res.status(200).json({
         data: forms
       })

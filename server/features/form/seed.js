@@ -1,7 +1,7 @@
-export const seed = {
-  name: 'registration_form',
+export const data = {
+  name: 'users',
   jsonSchema: {
-    title: 'A registration form',
+    title: 'An update user form',
     description: 'A simple form example.',
     type: 'object',
     required: ['firstName', 'lastName', 'age'],
@@ -31,7 +31,8 @@ export const seed = {
         type: 'string',
         title: 'Telephone',
         minLength: 10
-      }
+      },
+      additionalProperties: false
     }
   },
   uiSchema: {

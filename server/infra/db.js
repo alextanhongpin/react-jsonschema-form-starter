@@ -21,13 +21,20 @@ console.log("[mongodb] connected");
 // Connect to actual database.
 const db = client.db(MONGO_DATABASE);
 
-function createCollectionForms() {
+function createFormCollection() {
   const forms = db.collection("forms");
   forms.createIndex({ name: 1 }, { unique: true });
   return forms;
 }
 
+function createUserCollection() {
+  const users = db.collection("users");
+  users.createIndex({ name: 1, email: 1 }, { unique: true });
+  return users;
+}
+
 // Define collections here.
-export const collections = Object.seal({
-  Forms: createCollectionForms(),
+export const collection = Object.seal({
+  forms: createFormCollection(),
+  users: createUserCollection(),
 });
