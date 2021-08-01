@@ -1,4 +1,4 @@
 export const data = {
-  name: 'john doe',
+  firstName: 'john doe',
   email: 'john.doe@mail.com'
 }

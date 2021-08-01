@@ -4,23 +4,7 @@ import { useParams } from "react-router-dom";
 
 import { useFetchUserForm } from "features/forms/hooks";
 import { updateUser } from "features/forms/api";
-
-const MyCustomWidget = (props) => {
-  return (
-    <div>
-      <h1>Hello</h1>
-      <input
-        value={props.value}
-        required={props.required}
-        onChange={(e) => props.onChange(e.target.value)}
-      />
-    </div>
-  );
-};
-
-const widgets = {
-  MyCustomWidget: MyCustomWidget,
-};
+import { widgets } from "features/forms/widgets";
 
 export function UpdateUserForm() {
   const { userId } = useParams();

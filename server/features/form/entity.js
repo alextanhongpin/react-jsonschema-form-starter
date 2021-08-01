@@ -41,7 +41,13 @@ export default class Form {
   }
 
   static validate (schema, data) {
-    const ajv = new Ajv()
+    const ajv = new Ajv({
+      // Some of the jsonschema-forms has additional
+      // properties not available in the standard
+      // jsonschema (e.g. "enumNames" to display dropdown).
+      // Instead of throwing error, logging is a better option.
+      strictSchema: 'log'
+    })
     addFormats(ajv)
     const valid = ajv.validate(schema, data)
     return {

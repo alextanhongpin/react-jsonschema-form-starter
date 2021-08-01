@@ -9,7 +9,6 @@ export const data = {
       firstName: {
         type: 'string',
         title: 'First name',
-        default: 'Chuck',
         minLength: 1
       },
       lastName: {
@@ -17,11 +16,21 @@ export const data = {
         title: 'Last name',
         minLength: 1
       },
+      email: {
+        type: 'string',
+        title: 'Email',
+        format: 'email'
+      },
+      gender: {
+        type: 'string',
+        enum: ['male', 'female'],
+        enumNames: ['Male', 'Female']
+      },
       age: {
         type: 'number',
         title: 'Age',
-        minimum: 0,
-        maximum: 150
+        minimum: 1,
+        maximum: 120
       },
       bio: {
         type: 'string',
@@ -31,6 +40,9 @@ export const data = {
         type: 'string',
         title: 'Telephone',
         minLength: 10
+      },
+      country: {
+        type: 'number'
       },
       additionalProperties: false
     }
@@ -53,6 +65,9 @@ export const data = {
     bio: {
       'ui:widget': 'textarea'
     },
+    gender: {
+      'ui:widget': 'select'
+    },
     password: {
       'ui:widget': 'password',
       'ui:help': 'Hint: Make it strong!'
@@ -63,6 +78,29 @@ export const data = {
     telephone: {
       'ui:options': {
         inputType: 'tel'
+      }
+    },
+    country: {
+      // Custom search dropdown to populate the field.
+      'ui:widget': 'search-dropdown',
+      'ui:options': {
+        optionsForApi: {
+          searchable: true,
+          // We need to prefetch the option if it has already been selected.
+          // Uses handlebars to parse the template.
+          prefetchUrl: '/api/v1/countries/{{value}}',
+          prefetchTransform: 'data.{"label": name, "value": id}',
+
+          // Allows searching for a particular field.
+          url: '/api/v1/countries?name={{value}}',
+          // Uses jsonata.
+          // '[data.{"label": name, "value": id}]'
+          // Is not the same as
+          // 'data.{"label": name, "value": id}'
+          // The latter will return an object if there is only one item in the array,
+          // whereas the top will always return array.
+          transform: '[data.{"label": name, "value": id}]'
+        }
       }
     }
   }
