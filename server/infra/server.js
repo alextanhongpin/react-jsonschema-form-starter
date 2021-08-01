@@ -19,16 +19,8 @@ export function decorate (fn) {
 }
 
 export function start () {
-  app.use(clientErrorHandler)
   app.listen(PORT, () => {
     console.log(`listening to port *:${PORT}. press ctrl + c to cancel.`)
   })
 }
 
-function clientErrorHandler (err, req, res, next) {
-  if (req.xhr) {
-    res.status(400).json({ error: err.message })
-  } else {
-    next(err)
-  }
-}

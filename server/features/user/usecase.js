@@ -10,8 +10,8 @@ export default class UserUsecase {
     return this.repo.create(user)
   }
 
-  update (user) {
-    return this.repo.update(user)
+  update (query, params) {
+    return this.repo.update(query, params)
   }
 
   findAll (query) {

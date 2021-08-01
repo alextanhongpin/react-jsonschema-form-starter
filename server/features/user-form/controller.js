@@ -34,17 +34,23 @@ export default class UserFormController {
     }
 
     async function updateUser (req, res) {
-      const { userId, formName } = req.params
-      const user = req.body
+      try {
+        const { userId, formName } = req.params
+        const user = req.body
 
-      const forms = await formUsecase.findAll({ name: formName })
-      const form = new Form(forms?.[0])
-      form.validate(user)
-      const updateResult = await userUsercase.update({
-        id: userId,
-        ...user
-      })
-      return updateResult
+        const forms = await formUsecase.findAll({ name: formName })
+        const form = new Form(forms?.[0])
+        form.validate(user)
+        const updateResult = await userUsercase.update({ _id: userId }, user)
+
+        return res.status(200).json({
+          data: updateResult
+        })
+      } catch (error) {
+        return res.status(400).json({
+          error: error.message
+        })
+      }
     }
 
     async function createUser (req, res) {

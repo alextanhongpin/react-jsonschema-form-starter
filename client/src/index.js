@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -7,9 +8,11 @@ import { SWRProvider } from "./ports/swr";
 
 ReactDOM.render(
   <React.StrictMode>
-    <SWRProvider>
-      <App />
-    </SWRProvider>
+    <BrowserRouter>
+      <SWRProvider>
+        <App />
+      </SWRProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -1,5 +1,7 @@
 import FormError, { required } from './error.js'
 import Ajv from 'ajv'
+// ajv v7 does not include format validation such as email, telephone etc.
+import addFormats from 'ajv-formats'
 
 export default class Form {
   constructor (json) {
@@ -30,10 +32,9 @@ export default class Form {
 
     const result = {}
     for (const key in schema.properties) {
-      result[key] =
-        'properties' in schema.properties[key]
-          ? Form.extractFormData(schema.properties[key], data[key])
-          : data[key]
+      result[key] = schema.properties[key]?.properties
+        ? Form.extractFormData(schema.properties[key], data[key])
+        : data[key]
     }
 
     return result
@@ -41,6 +42,7 @@ export default class Form {
 
   static validate (schema, data) {
     const ajv = new Ajv()
+    addFormats(ajv)
     const valid = ajv.validate(schema, data)
     return {
       valid,

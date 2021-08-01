@@ -11,12 +11,15 @@ export default class UserRepository {
     return this.collection.users.insertOne(user)
   }
 
-  update (user) {
-    const { id, ...rest } = user
-    return this.collection.users.update({
-      _id: ObjectId(id),
-      ...rest
-    })
+  update (query, params) {
+    return this.collection.users.updateOne(
+      {
+        _id: ObjectId(query._id)
+      },
+      {
+        $set: params
+      }
+    )
   }
 
   findAll (query) {
