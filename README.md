@@ -20,7 +20,7 @@ Challenges
 - should create/update be a separate form?
 - the jsonschema can be shared on the server and client side now for validation
 - bulk create/update is probably a separate flow too
-
+- is it possible to convert the postgres type to jsonschema? https://www.pg-structure.com/
 
 Flow for single creationg
 - user navigates to create resource
