@@ -171,7 +171,7 @@ export const data = [
             prefetchUrl: '/api/v1/users/{{value}}',
             prefetchTransform: 'data.{"label": firstName, "value": _id}',
             url: '/api/v1/users?firstName={"$regex": "^{{value}}"}',
-            transform: '[data.{"label": firstName, "value": _id}]'
+            transform: 'data.{"label": firstName, "value": _id}[]'
           }
         }
       }
