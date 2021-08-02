@@ -11,7 +11,7 @@ export default class FormController {
 
     async function getForm (req, res, next) {
       try {
-        const form = await usecase.findOne(req.params.id)
+        const form = await usecase.findOne({ _id: req.params.id })
         return res.status(200).json({
           data: form
         })

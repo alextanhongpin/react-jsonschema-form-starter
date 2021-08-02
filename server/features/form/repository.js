@@ -1,5 +1,5 @@
-import { ObjectId } from 'mongodb'
 import { InternalError } from '../error/error.js'
+import { parseObjectId } from '../../infra/db/error.js'
 
 export default class FormRepository {
   constructor (collection) {
@@ -15,8 +15,9 @@ export default class FormRepository {
     return this.collection.forms.find(query).toArray()
   }
 
-  findOne (id) {
-    return this.collection.forms.findOne({ _id: ObjectId(id) })
+  findOne (query) {
+    parseObjectId(query)
+    return this.collection.forms.findOne(query)
   }
 
   findAllUsers () {

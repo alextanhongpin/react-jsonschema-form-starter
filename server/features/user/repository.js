@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb'
 import { InternalError } from '../error/error.js'
+import { parseObjectId } from '../../infra/db/error.js'
 
 export default class UserRepository {
   constructor (collection) {
@@ -26,7 +27,8 @@ export default class UserRepository {
     return this.collection.users.find(query).toArray()
   }
 
-  findOne (id) {
-    return this.collection.users.findOne({ _id: ObjectId(id) })
+  findOne (query) {
+    parseObjectId(query)
+    return this.collection.users.findOne(query)
   }
 }

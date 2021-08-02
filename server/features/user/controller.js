@@ -11,7 +11,7 @@ export default class UserController {
 
     async function getUser (req, res, next) {
       try {
-        const user = await usecase.findOne(req.params.id)
+        const user = await usecase.findOne({ _id: req.params.id })
         return res.status(200).json({
           data: user
         })

@@ -9,17 +9,15 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.get('/', (req, res, next) => {
+app.get('/', (req, res) => {
   res.status(200).json({
     msg: 'hello'
   })
 })
 
-export function decorate (fn) {
-  fn(app)
-}
+export default app
 
-export function start () {
+export function start (app) {
   // Register error middleware last.
   app.use(errorMiddleware)
   app.listen(PORT, () => {

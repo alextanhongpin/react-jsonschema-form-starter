@@ -18,7 +18,7 @@ export default class UserUsecase {
     return this.repo.findAll(query)
   }
 
-  findOne (id) {
-    return this.repo.findOne(id)
+  findOne (query) {
+    return this.repo.findOne(query)
   }
 }
