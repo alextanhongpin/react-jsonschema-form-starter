@@ -1,7 +1,7 @@
 import { baseUrl, fetcher } from "ports/api";
 
-export function createUser(formName, data) {
-  return fetcher(baseUrl(`/api/v1/user-forms/${formName}`), {
+export function create(formName, data) {
+  return fetcher(baseUrl(`/api/v1/dynamic-forms/${formName}`), {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -10,8 +10,8 @@ export function createUser(formName, data) {
   });
 }
 
-export function updateUser({ userId, formName }, data) {
-  return fetcher(baseUrl(`/api/v1/user-forms/${formName}/${userId}`), {
+export function update({ entityId, formName }, data) {
+  return fetcher(baseUrl(`/api/v1/dynamic-forms/${formName}/${entityId}`), {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

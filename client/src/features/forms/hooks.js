@@ -5,6 +5,6 @@ export function useFetchForms(queryParams) {
   return useSwr(() => baseUrl("/api/v1/forms", queryParams));
 }
 
-export function useFetchUserForm({ formName, userId }) {
-  return useSwr(() => baseUrl(`/api/v1/user-forms/${formName}/${userId}`));
+export function useFetchUserForm({ formName, entityId }) {
+  return useSwr(() => baseUrl(`/api/v1/dynamic-forms/${formName}/${entityId}`));
 }

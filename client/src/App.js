@@ -1,7 +1,8 @@
 import { Switch, Route, Link } from "react-router-dom";
 
+import { routes } from "ports/route";
 // Features.
-import { CreateUserForm, UpdateUserForm } from "features/forms";
+import { CreateForm, UpdateForm } from "features/forms";
 import { UserList } from "features/users";
 
 function App() {
@@ -12,8 +13,8 @@ function App() {
       </header>
       <Switch>
         <Route path="/" exact component={UserList} />
-        <Route path="/user/create" exact component={CreateUserForm} />
-        <Route path="/user/:userId/update" exact component={UpdateUserForm} />
+        <Route path={routes.Create} exact component={CreateForm} />
+        <Route path={routes.Update} exact component={UpdateForm} />
       </Switch>
     </>
   );

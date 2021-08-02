@@ -1,21 +1,23 @@
 import { useState } from "react";
 import Form from "@rjsf/core";
+import { useParams } from "react-router-dom";
 
 import { useFetchForms } from "features/forms/hooks";
-import { createUser } from "features/forms/api";
+import { create } from "features/forms/api";
 import { widgets } from "features/forms/widgets";
 
-export function CreateUserForm() {
+export function CreateForm() {
+  const { formName } = useParams();
   const [createError, setCreateError] = useState();
   const { data, loading, error } = useFetchForms({
-    name: "users",
+    name: formName,
   });
 
   const [formData, setFormData] = useState({});
 
   const handleSubmit = async (schema) => {
     try {
-      await createUser("users", schema.formData);
+      await create(formName, schema.formData);
     } catch (error) {
       setCreateError(error);
     }

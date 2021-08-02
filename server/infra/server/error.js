@@ -16,7 +16,7 @@ export function errorMiddleware (err, req, res, next) {
   }
 
   // Handles json response.
-  if (req.xhr || req.headers['content-type'].startsWith('application/json')) {
+  if (req.xhr) {
     const statusCode = statusCodeByErrorCode[err.code] ?? 500
     const error = err.message
     const code = err.code ?? ErrorCode.Internal

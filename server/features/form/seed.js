@@ -1,5 +1,15 @@
 export const data = {
   name: 'users',
+  // apiSchema: {
+  /// / Create requires no additional api call to populate the form.
+  // create: null,
+  // update: {
+  /// / Fetch formData for update.
+  // url: '/api/v1/users/{{userId}}',
+  /// / Allows transformation to fit the structure of the jsonSchema.
+  // transform: undefined
+  // }
+  // },
   jsonSchema: {
     title: 'An update user form',
     description: 'A simple form example.',
@@ -83,6 +93,9 @@ export const data = {
     country: {
       // Custom search dropdown to populate the field.
       'ui:widget': 'search-dropdown',
+      // Improvements: use api:options instead?
+      // 'api:options': {
+      // },
       'ui:options': {
         optionsForApi: {
           searchable: true,

@@ -1,6 +1,7 @@
 import { Link, generatePath } from "react-router-dom";
 
 import { useFetchUsers } from "features/users/hooks";
+import { routes } from "ports/route";
 
 export const UserList = () => {
   const { data, loading, error } = useFetchUsers();
@@ -11,7 +12,13 @@ export const UserList = () => {
   return (
     <div>
       <h1>Users</h1>
-      <Link to="/user/create">Create User</Link>
+      <Link
+        to={generatePath(routes.Create, {
+          formName: "users",
+        })}
+      >
+        Create User
+      </Link>
 
       <div>
         {users.map((user) => (
@@ -20,8 +27,9 @@ export const UserList = () => {
               {user.firstName} {user.lastName}
             </span>
             <Link
-              to={generatePath("/user/:id/update", {
-                id: user._id,
+              to={generatePath(routes.Update, {
+                formName: "users",
+                entityId: user._id,
               })}
             >
               Edit

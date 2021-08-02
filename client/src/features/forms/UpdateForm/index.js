@@ -3,15 +3,15 @@ import Form from "@rjsf/core";
 import { useParams } from "react-router-dom";
 
 import { useFetchUserForm } from "features/forms/hooks";
-import { updateUser } from "features/forms/api";
+import { update } from "features/forms/api";
 import { widgets } from "features/forms/widgets";
 
-export function UpdateUserForm() {
-  const { userId } = useParams();
+export function UpdateForm() {
+  const { entityId, formName } = useParams();
   const [createError, setCreateError] = useState();
   const { data, loading, error } = useFetchUserForm({
-    formName: "users",
-    userId,
+    formName,
+    entityId,
   });
   const [formData, setFormData] = useState({});
 
@@ -24,10 +24,10 @@ export function UpdateUserForm() {
 
   const handleSubmit = async (schema) => {
     try {
-      await updateUser(
+      await update(
         {
-          formName: "users",
-          userId,
+          formName,
+          entityId,
         },
         schema.formData
       );
