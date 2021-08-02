@@ -3,11 +3,11 @@ import Router from 'express'
 import UserController from './controller.js'
 import UserUsecase from './usecase.js'
 import UserRepository from './repository.js'
-import UserError from './error.js'
+import { InternalError } from '../error/error.js'
 import { data } from './seed.js'
 
 export function createUserFeature (collection) {
-  if (!collection) throw new UserError('missing dependency: collection')
+  if (!collection) throw new InternalError('missing dependency: collection')
 
   const repo = new UserRepository(collection)
   const usecase = new UserUsecase(repo)

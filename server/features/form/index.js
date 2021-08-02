@@ -1,12 +1,13 @@
+import Router from 'express'
+
 import FormController from './controller.js'
 import FormUsecase from './usecase.js'
 import FormRepository from './repository.js'
-import FormError from './error.js'
-import Router from 'express'
+import { InternalError } from '../error/error.js'
 import { data } from './seed.js'
 
 export function createFormFeature (collection) {
-  if (!collection) throw new FormError('missing dependency: collection')
+  if (!collection) throw new InternalError('missing dependency: collection')
 
   const repo = new FormRepository(collection)
   const usecase = new FormUsecase(repo)

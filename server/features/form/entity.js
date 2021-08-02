@@ -1,11 +1,11 @@
-import FormError, { required } from './error.js'
 import Ajv from 'ajv'
 // ajv v7 does not include format validation such as email, telephone etc.
 import addFormats from 'ajv-formats'
+import { InternalError, required } from '../error/error.js'
 
 export default class Form {
   constructor (json) {
-    if (!json) throw new FormError('not found')
+    if (!json) throw new InternalError('not found')
 
     required({
       name: json.name,

@@ -11,7 +11,7 @@ export default class CountryController {
       }
     ]
 
-    async function getCountry (req, res) {
+    function getCountry (req, res) {
       const { id } = req.params
 
       return res.status(200).json({
@@ -19,7 +19,7 @@ export default class CountryController {
       })
     }
 
-    async function getCountries (req, res) {
+    function getCountries (req, res) {
       const { name } = req.query
 
       return res.status(200).json({

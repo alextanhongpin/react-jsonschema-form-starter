@@ -1,9 +1,9 @@
 import { ObjectId } from 'mongodb'
-import UserError from './error.js'
+import { InternalError } from '../error/error.js'
 
 export default class UserRepository {
   constructor (collection) {
-    if (!collection) throw new UserError('missing dependency: collection')
+    if (!collection) throw new InternalError('missing dependency: collection')
     this.collection = collection
   }
 

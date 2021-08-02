@@ -1,8 +1,8 @@
-import FormError from './error.js'
+import { InternalError } from '../error/error.js'
 
 export default class FormUsecase {
   constructor (repo) {
-    if (!repo) throw new FormError('missing dependency: repo')
+    if (!repo) throw new InternalError('missing dependency: repo')
     this.repo = repo
   }
 

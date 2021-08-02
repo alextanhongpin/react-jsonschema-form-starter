@@ -1,9 +1,9 @@
 import { ObjectId } from 'mongodb'
-import FormError from './error.js'
+import { InternalError } from '../error/error.js'
 
 export default class FormRepository {
   constructor (collection) {
-    if (!collection) throw new FormError('missing dependency: collection')
+    if (!collection) throw new InternalError('missing dependency: collection')
     this.collection = collection
   }
 

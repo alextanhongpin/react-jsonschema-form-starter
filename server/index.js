@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { start, decorate } from './infra/server.js'
+import { start, decorate } from './infra/server/index.js'
 import { createCountryFeature } from './features/country/index.js'
 import { createFormFeature } from './features/form/index.js'
 import { createUserFeature } from './features/user/index.js'

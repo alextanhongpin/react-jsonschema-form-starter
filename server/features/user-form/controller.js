@@ -1,12 +1,13 @@
+import { InternalError } from '../error/error.js'
 import Form from '../form/entity.js'
 
 export default class UserFormController {
   constructor ({ userUsecase, formUsecase }) {
     if (!userUsecase) {
-      throw new Error('userFormError: missing dependency: userUsercase')
+      throw new InternalError('missing dependency: userUsercase')
     }
     if (!formUsecase) {
-      throw new Error('userFormError: missing dependency: formUsecase')
+      throw new InternalError('missing dependency: formUsecase')
     }
 
     this.userUsercase = userUsecase
@@ -16,24 +17,28 @@ export default class UserFormController {
   createRoutes () {
     const { userUsercase, formUsecase } = this
 
-    async function getUserFormForUpdate (req, res) {
-      const { userId, formName } = req.params
+    async function getUserFormForUpdate (req, res, next) {
+      try {
+        const { userId, formName } = req.params
 
-      const user = await userUsercase.findOne(userId)
-      const forms = await formUsecase.findAll({ name: formName })
-      const form = new Form(forms?.[0])
-      const formData = form.extractFormData(user)
+        const user = await userUsercase.findOne(userId)
+        const forms = await formUsecase.findAll({ name: formName })
+        const form = new Form(forms?.[0])
+        const formData = form.extractFormData(user)
 
-      return res.status(200).json({
-        data: {
-          formData,
-          schema: form.json.jsonSchema,
-          uiSchema: form.json.uiSchema
-        }
-      })
+        return res.status(200).json({
+          data: {
+            formData,
+            schema: form.json.jsonSchema,
+            uiSchema: form.json.uiSchema
+          }
+        })
+      } catch (err) {
+        next(err)
+      }
     }
 
-    async function updateUser (req, res) {
+    async function updateUser (req, res, next) {
       try {
         const { userId, formName } = req.params
         const user = req.body
@@ -46,14 +51,12 @@ export default class UserFormController {
         return res.status(200).json({
           data: updateResult
         })
-      } catch (error) {
-        return res.status(400).json({
-          error: error.message
-        })
+      } catch (err) {
+        next(err)
       }
     }
 
-    async function createUser (req, res) {
+    async function createUser (req, res, next) {
       try {
         const { formName } = req.params
         const user = req.body
@@ -63,10 +66,8 @@ export default class UserFormController {
         form.validate(user)
         const createResult = await userUsercase.create(user)
         return createResult
-      } catch (error) {
-        return res.status(400).json({
-          error: error.message
-        })
+      } catch (err) {
+        next(err)
       }
     }
 
