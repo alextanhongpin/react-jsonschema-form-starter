@@ -21,6 +21,7 @@ Challenges
 - the jsonschema can be shared on the server and client side now for validation
 - bulk create/update is probably a separate flow too
 - is it possible to convert the postgres type to jsonschema? https://www.pg-structure.com/
+- how about errors that are due to database constraints (uniqueness, referential integrity) that is not because of json schema? display them in the ui too.
 
 Flow for single creationg
 - user navigates to create resource
