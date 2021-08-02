@@ -1,30 +1,30 @@
 import { Link, generatePath } from "react-router-dom";
 
-import { useFetchUsers } from "features/users/hooks";
+import { useFetchBooks } from "features/books/hooks";
 import { routes } from "ports/route";
 
-export const UserList = () => {
-  const { data, loading, error } = useFetchUsers();
+export const BookList = () => {
+  const { data, loading, error } = useFetchBooks();
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
-  const users = data?.data ?? [];
+  const books = data?.data ?? [];
 
   return (
     <div>
-      <h1>Users</h1>
+      <h1>Books</h1>
       <Link
         to={generatePath(routes.Create, {
-          formName: "users",
+          formName: "books",
         })}
       >
-        Create User
+        Create Book
       </Link>
 
       <table className="table">
         <thead>
-          {users.length && (
+          {books.length && (
             <tr>
-              {Object.keys(users[0]).map((name) => (
+              {Object.keys(books[0]).map((name) => (
                 <th key={name}>{name}</th>
               ))}
               <th>Action</th>
@@ -32,16 +32,16 @@ export const UserList = () => {
           )}
         </thead>
         <tbody>
-          {users.map((user) => (
-            <tr key={user._id}>
-              {Object.values(user).map((value) => (
+          {books.map((book) => (
+            <tr key={book._id}>
+              {Object.values(book).map((value) => (
                 <td>{value}</td>
               ))}
               <td>
                 <Link
                   to={generatePath(routes.Update, {
-                    formName: "users",
-                    entityId: user._id,
+                    formName: "books",
+                    entityId: book._id,
                   })}
                 >
                   View

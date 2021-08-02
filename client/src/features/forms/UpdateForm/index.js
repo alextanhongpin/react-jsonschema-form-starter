@@ -42,7 +42,7 @@ export function UpdateForm() {
   if (!form) return null;
 
   return (
-    <>
+    <div className="container">
       {createError && JSON.stringify(createError)}
       <Form
         schema={form.schema}
@@ -53,6 +53,6 @@ export function UpdateForm() {
         onSubmit={handleSubmit}
         noHtml5Validate
       />
-    </>
+    </div>
   );
 }

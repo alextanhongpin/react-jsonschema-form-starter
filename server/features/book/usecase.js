@@ -1,13 +1,17 @@
 import { InternalError } from '../error/error.js'
 
-export default class FormUsecase {
+export default class BookUsecase {
   constructor (repo) {
     if (!repo) throw new InternalError('missing dependency: repo')
     this.repo = repo
   }
 
-  create (form) {
-    return this.repo.create(form)
+  create (book) {
+    return this.repo.create(book)
+  }
+
+  update (query, params) {
+    return this.repo.update(query, params)
   }
 
   findAll (query) {
@@ -16,10 +20,5 @@ export default class FormUsecase {
 
   findOne (query) {
     return this.repo.findOne(query)
-  }
-
-  createMany (forms = []) {
-    if (!forms.length) return
-    return this.repo.createMany(forms)
   }
 }

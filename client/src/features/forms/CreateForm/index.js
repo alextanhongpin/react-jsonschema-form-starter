@@ -29,7 +29,7 @@ export function CreateForm() {
   if (!form) return null;
 
   return (
-    <>
+    <div className="container">
       {createError && JSON.stringify(createError)}
       <Form
         schema={form.jsonSchema}
@@ -40,6 +40,6 @@ export function CreateForm() {
         onSubmit={handleSubmit}
         noHtml5Validate
       />
-    </>
+    </div>
   );
 }

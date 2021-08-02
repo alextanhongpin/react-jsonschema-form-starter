@@ -6,3 +6,6 @@ up:
 
 down:
 	@docker-compose down
+
+dashboard:
+	@open http://localhost:8081

@@ -14,14 +14,9 @@ export default class DynamicFormController {
     async function findOne (req, res, next) {
       try {
         const { id, formName } = req.params
-        const data = await usecase.findFormForUpdate({
-          id,
-          formName
-        })
+        const data = await usecase.findFormForUpdate({ id, formName })
 
-        return res.status(200).json({
-          data
-        })
+        return res.status(200).json({ data })
       } catch (err) {
         next(err)
       }
@@ -37,9 +32,7 @@ export default class DynamicFormController {
           data: req.body
         })
 
-        return res.status(200).json({
-          data
-        })
+        return res.status(200).json({ data })
       } catch (err) {
         next(err)
       }
@@ -53,9 +46,8 @@ export default class DynamicFormController {
           formName,
           data: req.body
         })
-        return res.status(200).json({
-          data
-        })
+
+        return res.status(200).json({ data })
       } catch (err) {
         next(err)
       }

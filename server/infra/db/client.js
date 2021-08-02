@@ -1,14 +1,29 @@
 import { MongoClient } from "mongodb";
 
-const MONGO_USER = process.env.MONGO_USER ?? "root";
-const MONGO_PASSWORD = process.env.MONGO_PASSWORD ?? "example";
-const MONGO_HOST = process.env.MONGO_HOST ?? "localhost";
-const MONGO_PORT = process.env.MONGO_PORT ?? "27017";
-const MONGO_DATABASE = process.env.MONGO_DATABASE ?? "testing";
+class Config {
+  constructor() {
+    this.user = process.env.MONGO_USER ?? "root";
+    this.password = process.env.MONGO_PASSWORD ?? "example";
+    this.host = process.env.MONGO_HOST ?? "localhost";
+    this.port = process.env.MONGO_PORT ?? "27017";
+    this.database = process.env.MONGO_DATABASE ?? "testing";
+  }
 
-const uri = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}`;
+  toString() {
+    return `mongodb://${this.user}:${this.password}@${this.host}:${this.port}`;
+  }
+}
 
-const client = new MongoClient(uri, {
+const config = new Config();
+
+// Collection names.
+const c = {
+  Users: "users",
+  Books: "books",
+  Forms: "forms",
+};
+
+const client = new MongoClient(config.toString(), {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -19,16 +34,16 @@ await client.db("admin").command({ ping: 1 });
 console.log("[mongodb] connected");
 
 // Connect to actual database.
-const db = client.db(MONGO_DATABASE);
+const db = client.db(config.database);
 
 function createFormCollection() {
-  const forms = db.collection("forms");
+  const forms = db.collection(c.Forms);
   forms.createIndex({ name: 1 }, { unique: true });
   return forms;
 }
 
 function createUserCollection() {
-  const users = db.collection("users");
+  const users = db.collection(c.Users);
   users.createIndex({ name: 1, email: 1 }, { unique: true });
   return users;
 }
@@ -37,4 +52,5 @@ function createUserCollection() {
 export const collection = Object.seal({
   forms: createFormCollection(),
   users: createUserCollection(),
+  books: db.collection(c.Books),
 });

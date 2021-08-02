@@ -3,8 +3,8 @@ import { BadInputError } from '../../features/error/index.js'
 
 // parseObjectId validates if obj._id id set, validates it, and parses it to
 // native mongodb ObjectId.
-export function parseObjectId (obj) {
-  const id = obj._id
+export function parseObjectId (obj, field = '_id') {
+  const id = obj[field]
   if (id === null || id === undefined) {
     return
   }
@@ -13,7 +13,7 @@ export function parseObjectId (obj) {
     throw new BadInputError('id is invalid')
   }
 
-  if (obj._id) {
-    obj._id = ObjectId(id)
+  if (obj[field]) {
+    obj[field] = ObjectId(id)
   }
 }

@@ -1,4 +1,4 @@
-import { InternalError } from '../error/error.js'
+import { BadInputError, InternalError } from '../error/error.js'
 
 export default class UserUsecase {
   constructor (repo) {
@@ -15,6 +15,13 @@ export default class UserUsecase {
   }
 
   findAll (query) {
+    try {
+      for (const key in query) {
+        query[key] = JSON.parse(query[key])
+      }
+    } catch (error) {
+      throw new BadInputError(error.message)
+    }
     return this.repo.findAll(query)
   }
 

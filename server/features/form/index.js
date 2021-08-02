@@ -15,7 +15,7 @@ export function createFormFeature (collection) {
 
   async function seed () {
     try {
-      await usecase.create(data)
+      await usecase.createMany(data)
     } catch (error) {
       console.error(error)
     }
